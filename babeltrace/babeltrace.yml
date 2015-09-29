@@ -10,6 +10,7 @@ install:
         git-repos:
                 - url: https://github.com/PSRCode/babeltrace.git
                   branch: lava
+                  destination: babeltrace_src
         deps:
                 - 'libpopt-dev'
                 - 'uuid-dev'
@@ -35,7 +36,7 @@ install:
                 - 'cppcheck'
                 - 'python-virtualenv'
         steps:
-                - 'cd babeltrace'
+                - 'cd babeltrace_src'
                 - './bootstrap'
                 - './configure'
                 - 'make -j `nproc`'
@@ -45,7 +46,7 @@ install:
                 - 'cd ..'
 run:
         steps:
-                - 'cd babeltrace/tests'
+                - 'cd babeltrace_src/tests'
                 - 'prove --merge -v --archive ../tap --exec '' < ./tests'
                 - 'cd ../'
                 - 'rm tap/meta.yml'
