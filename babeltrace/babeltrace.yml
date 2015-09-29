@@ -1,0 +1,56 @@
+metadata:
+        format: Lava-Test Test Definition 1.0
+        name: babeltrace
+        description: "Test of babeltrace"
+
+devices:
+        - kvm
+
+install:
+        deps:
+                - 'libpopt-dev'
+                - 'uuid-dev'
+                - 'python3-dev'
+                - 'python3-sphinx'
+                - 'swig2.0'
+                - 'libglib2.0-dev'
+                - 'sudo'
+                - 'openjdk-7-jdk'
+                - 'git'
+                - 'vim'
+                - 'tree'
+                - 'htop'
+                - 'build-essential'
+                - 'clang'
+                - 'automake'
+                - 'autoconf'
+                - 'libtool'
+                - 'bison'
+                - 'flex'
+                - 'libtap-harness-archive-perl'
+                - 'jq'
+                - 'cppcheck'
+                - 'python-virtualenv'
+                - 'pip'
+install:
+        steps:
+                - 'pip install tap.py'
+                - 'cd babeltrace'
+                - './bootstrap'
+                - './configure'
+                - 'make -j `nproc`'
+                - 'make install'
+                - 'ldconfig'
+                - 'mkdir tap'
+                - 'cd ..'
+run:
+        steps:
+                - 'cd babeltrace/tests'
+                - 'prove --merge -v --archive ../tap --exec '' < ./tests'
+                - 'cd ../'
+                - 'rm tap/meta.yml'
+                - 'find ./tap/ -type f -exec mv {} {}.tap \;'
+                - 'python3 tap_lava.py'
+                - 'cd ../'
+
+
