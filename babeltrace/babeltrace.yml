@@ -34,7 +34,6 @@ install:
                 - 'jq'
                 - 'cppcheck'
                 - 'python-virtualenv'
-install:
         steps:
                 - 'cd babeltrace'
                 - './bootstrap'
