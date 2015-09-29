@@ -37,7 +37,6 @@ install:
                 - 'pip'
 install:
         steps:
-                - 'pip install tap.py'
                 - 'cd babeltrace'
                 - './bootstrap'
                 - './configure'
