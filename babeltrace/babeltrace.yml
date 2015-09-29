@@ -7,6 +7,9 @@ devices:
         - kvm
 
 install:
+        git-repos:
+                url: https://github.com/PSRCode/babeltrace.git
+                branch: lava
         deps:
                 - 'libpopt-dev'
                 - 'uuid-dev'
