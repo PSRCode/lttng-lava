@@ -48,11 +48,7 @@ install:
 run:
         steps:
                 - 'cd babeltrace_src/tests'
-                - "prove --merge -v --archive ../tap --exec '' < ./tests"
-                - 'cd ../'
-                - 'rm tap/meta.yml'
-                - 'find ./tap/ -type f -exec mv {} {}.tap \;'
-                - 'python3 tap_lava.py'
-                - 'cd ../'
+                - "prove --merge -v --exec '' < ./tests"
+                - 'cd ../../'
 
 
