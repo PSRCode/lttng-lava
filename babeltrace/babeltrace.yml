@@ -36,6 +36,7 @@ install:
                 - 'cppcheck'
                 - 'python-virtualenv'
         steps:
+                - 'pip install tap.py'
                 - 'cd babeltrace_src'
                 - './bootstrap'
                 - './configure'
@@ -47,7 +48,7 @@ install:
 run:
         steps:
                 - 'cd babeltrace_src/tests'
-                - 'prove --merge -v --archive ../tap --exec '' < ./tests'
+                - "prove --merge -v --archive ../tap --exec '' < ./tests"
                 - 'cd ../'
                 - 'rm tap/meta.yml'
                 - 'find ./tap/ -type f -exec mv {} {}.tap \;'
