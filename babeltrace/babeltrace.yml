@@ -52,7 +52,7 @@ run:
                 - 'cd ../'
                 - 'rm tap/meta.yml'
                 - 'find ./tap/ -type f -exec mv {} {}.tap \;'
-                - 'python3 tap_lava.py'
+                - 'python2 tap_lava.py'
                 - 'cd ../'
 
 
