@@ -48,7 +48,7 @@ install:
 run:
         steps:
                 - 'cd babeltrace_src/tests'
-                - "prove --merge -v --exec '' < ./tests"
+                - ls -la
                 - 'cd ../../'
 
 
