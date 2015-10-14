@@ -54,5 +54,7 @@ run:
                 - 'find ./tap/ -type f -exec mv {} {}.tap \;'
                 - 'python2 tap_lava.py'
                 - 'cd ../'
+parse:
+        pattern: "id:(?P<test_case_id>\S*)\s*result:(?P<result>(pass|fail))"
 
 
