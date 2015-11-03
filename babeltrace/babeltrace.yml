@@ -55,6 +55,6 @@ run:
                 - 'python2 tap_lava.py'
                 - 'cd ../'
 parse:
-        pattern: "id:(?P<test_case_id>\S*)\s*result:(?P<result>(pass|fail))"
+        pattern: "id:(?P<test_case_id>[^ \t\n\r\f\v]*)\s*result:(?P<result>(pass|fail))"
 
 
