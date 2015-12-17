@@ -31,5 +31,5 @@ install:
                   destination: babeltrace_src
 run:
         steps:
-                - 'ls -la'
-                - 'lsmod'
+                 - "lava-test-case pass-test --shell ls"
+                 - "lava-test-case pass-test --shell lsmod"
