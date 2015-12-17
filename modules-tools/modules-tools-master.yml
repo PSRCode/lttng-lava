@@ -32,3 +32,4 @@ install:
 run:
         steps:
                 - 'ls -la'
+                - 'lsmod'
