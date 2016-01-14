@@ -5,31 +5,14 @@ metadata:
 
 devices:
         - kvm
-params:
-        URCU_GIT: master
-        MODULES_GIT: master
-        UST_GIT: master
-        TOOLS_GIT: master
-        BABELTRACE_GIT: master
-
-install:
-        git-repos:
-                - url: https://github.com/urcu/userspace-rcu
-                  branch: URCU_GIT
-                  destination: userspace-rcu_src
-                - url: https://github.com/lttng/lttng-modules
-                  branch: MODULES_GIT
-                  destination: lttng-modules_src
-                - url: https://github.com/lttng/lttng-ust
-                  branch: UST_GIT
-                  destination: lttng-ust_src
-                - url: https://github.com/lttng/lttng-tools
-                  branch: TOOLS_GIT
-                  destination: lttng-tools_src
-                - url: https://github.com/efficios/babeltrace
-                  branch: BABELTRACE_GIT
-                  destination: babeltrace_src
 run:
         steps:
-                 - "lava-test-case pass-test --shell ls"
-                 - "lava-test-case pass-test --shell lsmod"
+                - "lava-test-case ls --shell ls /root"
+                - "lava-test-case tar --shell tar -xvf /root/4.4.0-rc4.tar -C /lib/modules/"
+                - "lava-test-case depmod --shell depmod -a -v"
+                - "lava-test-case linux-version --shell uname -a"
+                - "lava-test-case pwd --shell pwd"
+                - "lava-test-case list-folder-modules --shell ls /lib/modules"
+                - "lava-test-case dry-modprobe --shell modprobe --dry-run lttng-test -v"
+                - "lava-test-case real-modprobe --shell modprobe lttng-test -v"
+                - "lava-test-case list-mod --shell lsmod"
