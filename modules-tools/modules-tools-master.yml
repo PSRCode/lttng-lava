@@ -3,6 +3,13 @@ metadata:
         name: modules-tools
         description: "Test kernel tracing on various kernel"
 
+params:
+        URCU_GIT: master
+        MODULES_GIT: master
+        UST_GIT: master
+        TOOLS_GIT: master
+        BABELTRACE_GIT: master
+
 devices:
         - kvm
 install:
@@ -19,33 +26,36 @@ install:
                 - url: https://github.com/efficios/babeltrace
                   branch: BABELTRACE_GIT
                   destination: babeltrace_src
-        steps:
-                - "cd userspace-rcu_src"
-                - "./configure"
-                - "make"
-                - "make install"
-                - "ldconfig -v"
-                - "cd .."
-                - "cd babeltrace_src"
-                - "./configure"
-                - "make"
-                - "make install"
-                - "ldconfig -v"
-                - "cd .."
-                - "cd lttng-ust_src"
-                - "./configure"
-                - "make"
-                - "make install"
-                - "ldconfig -v"
-                - "cd .."
-                - "cd lttng-tools_src"
-                - "./configure"
-                - "make"
-                - "make install"
-                - "ldconfig -v"
-                - "cd .."
 run:
         steps:
+                - "lava-test-case install_00 --shell cd userspace-rcu_src"
+                - "lava-test-case install_01 --shell ./bootstrap"
+                - "lava-test-case install_02 --shell ./configure"
+                - "lava-test-case install_03 --shell make"
+                - "lava-test-case install_04 --shell make install"
+                - "lava-test-case install_05 --shell ldconfig -v"
+                - "lava-test-case install_06 --shell cd .."
+                - "lava-test-case install_07 --shell cd babeltrace_src"
+                - "lava-test-case install_08 --shell ./bootstrap"
+                - "lava-test-case install_09 --shell ./configure"
+                - "lava-test-case install_10 --shell make"
+                - "lava-test-case install_11 --shell make install"
+                - "lava-test-case install_12 --shell ldconfig -v"
+                - "lava-test-case install_13 --shell cd .."
+                - "lava-test-case install_14 --shell cd lttng-ust_src"
+                - "lava-test-case install_15 --shell ./bootstrap"
+                - "lava-test-case install_16 --shell ./configure"
+                - "lava-test-case install_17 --shell make"
+                - "lava-test-case install_18 --shell make install"
+                - "lava-test-case install_19 --shell ldconfig -v"
+                - "lava-test-case install_20 --shell cd .."
+                - "lava-test-case install_21 --shell cd lttng-tools_src"
+                - "lava-test-case install_22 --shell ./bootstrap"
+                - "lava-test-case install_23 --shell ./configure"
+                - "lava-test-case install_24 --shell make"
+                - "lava-test-case install_25 --shell make install"
+                - "lava-test-case install_26 --shell ldconfig -v"
+                - "lava-test-case install_27 --shell cd .."
                 - "lava-test-case ls --shell ls /root"
                 - "lava-test-case tar --shell tar -xvf /root/4.4.0-rc4.tar -C /lib/modules/"
                 - "lava-test-case depmod --shell depmod -a -v"
