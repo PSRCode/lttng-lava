@@ -5,6 +5,45 @@ metadata:
 
 devices:
         - kvm
+install:
+        git-repos:
+                - url: https://github.com/urcu/userspace-rcu
+                  branch: URCU_GIT
+                  destination: userspace-rcu_src
+                - url: https://github.com/lttng/lttng-ust
+                  branch: UST_GIT
+                  destination: lttng-ust_src
+                - url: https://github.com/lttng/lttng-tools
+                  branch: TOOLS_GIT
+                  destination: lttng-tools_src
+                - url: https://github.com/efficios/babeltrace
+                  branch: BABELTRACE_GIT
+                  destination: babeltrace_src
+        steps:
+                - "cd userspace-rcu_src"
+                - "./configure"
+                - "make"
+                - "make install"
+                - "ldconfig -v"
+                - "cd .."
+                - "cd babeltrace_src"
+                - "./configure"
+                - "make"
+                - "make install"
+                - "ldconfig -v"
+                - "cd .."
+                - "cd lttng-ust_src"
+                - "./configure"
+                - "make"
+                - "make install"
+                - "ldconfig -v"
+                - "cd .."
+                - "cd lttng-tools_src"
+                - "./configure"
+                - "make"
+                - "make install"
+                - "ldconfig -v"
+                - "cd .."
 run:
         steps:
                 - "lava-test-case ls --shell ls /root"
