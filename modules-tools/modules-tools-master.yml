@@ -9,21 +9,25 @@ params:
         UST_GIT: master
         TOOLS_GIT: master
         BABELTRACE_GIT: master
+        URCU_GIT_URL: https://github.com/urcu/userspace-rcu
+        UST_GIT_URL: https://github.com/lttng/lttng-ust
+        TOOLS_GIT_URL: https://github.com/lttng/lttng-tools
+        BABELTRACE_GIT_URL: https://github.com/efficios/babeltrace
 
 devices:
         - kvm
 install:
         git-repos:
-                - url: https://github.com/urcu/userspace-rcu
+                - url: URCU_GIT_URL
                   branch: URCU_GIT
                   destination: userspace-rcu_src
-                - url: https://github.com/lttng/lttng-ust
+                - url: UST_GIT_URL
                   branch: UST_GIT
                   destination: lttng-ust_src
-                - url: https://github.com/lttng/lttng-tools
+                - url: TOOLS_GIT_URL
                   branch: TOOLS_GIT
                   destination: lttng-tools_src
-                - url: https://github.com/efficios/babeltrace
+                - url: BABELTRACE_GIT_URL
                   branch: BABELTRACE_GIT
                   destination: babeltrace_src
 run:
@@ -62,5 +66,6 @@ run:
                 - "lava-test-case depmod --shell depmod -a -v"
                 - "cd lttng-tools_src/tests"
                 - "ls -la"
+                - "echo 'regression/tools/streaming/test_high_throughput_limits' > `pwd`/root_regression"
                 - "prove --merge -v --exec '' - < `pwd`/root_regression"
 
