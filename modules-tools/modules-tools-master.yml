@@ -18,16 +18,16 @@ devices:
         - kvm
 install:
         git-repos:
-                - url: URCU_GIT_URL
+                - url: "https://github.com/urcu/userspace-rcu"
                   branch: URCU_GIT
                   destination: userspace-rcu_src
-                - url: UST_GIT_URL
+                - url: "https://github.com/lttng/lttng-ust"
                   branch: UST_GIT
                   destination: lttng-ust_src
-                - url: TOOLS_GIT_URL
+                - url: "https://github.com/lttng/lttng-tools"
                   branch: TOOLS_GIT
                   destination: lttng-tools_src
-                - url: BABELTRACE_GIT_URL
+                - url: "https://github.com/efficios/babeltrace"
                   branch: BABELTRACE_GIT
                   destination: babeltrace_src
 run:
