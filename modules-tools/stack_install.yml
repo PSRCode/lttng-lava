@@ -1,0 +1,63 @@
+metadata:
+        format: Lava-Test Test Definition 1.0
+        name: modules-tools
+        description: "Test kernel tracing on various kernel"
+
+params:
+        URCU_GIT: master
+        MODULES_GIT: master
+        UST_GIT: master
+        TOOLS_GIT: master
+        BABELTRACE_GIT: master
+        URCU_GIT_URL: https://github.com/urcu/userspace-rcu
+        UST_GIT_URL: https://github.com/lttng/lttng-ust
+        TOOLS_GIT_URL: https://github.com/lttng/lttng-tools
+        BABELTRACE_GIT_URL: https://github.com/efficios/babeltrace
+
+devices:
+        - kvm
+install:
+        git-repos:
+                - url: "https://github.com/urcu/userspace-rcu"
+                  branch: URCU_GIT
+                  destination: userspace-rcu_src
+                - url: "https://github.com/lttng/lttng-ust"
+                  branch: UST_GIT
+                  destination: lttng-ust_src
+                - url: "https://github.com/psrcode/lttng-tools"
+                  branch: TOOLS_GIT
+                  destination: lttng-tools_src
+                - url: "https://github.com/efficios/babeltrace"
+                  branch: BABELTRACE_GIT
+                  destination: babeltrace_src
+run:
+        steps:
+                - "cd userspace-rcu_src"
+                - "lava-test-case urcu_bootstrap --shell ./bootstrap"
+                - "lava-test-case urcu_configure --shell ./configure"
+                - "lava-test-case urcu_make --shell make"
+                - "lava-test-case urcu_install --shell make install"
+                - "lava-test-case urcu_ldconfig --shell ldconfig -v"
+                - "cd .."
+                - "cd babeltrace_src"
+                - "lava-test-case babeltrace_bootstrap --shell ./bootstrap"
+                - "lava-test-case babeltrace_configure --shell ./configure"
+                - "lava-test-case babeltrace_make --shell make"
+                - "lava-test-case babeltrace_install --shell make install"
+                - "lava-test-case babeltrace_ldconfig --shell ldconfig -v"
+                - "cd .."
+                - "cd lttng-ust_src"
+                - "lava-test-case ust_bootstrap --shell ./bootstrap"
+                - "lava-test-case ust_configure --shell ./configure"
+                - "lava-test-case ust_make --shell make"
+                - "lava-test-case ust_install --shell make install"
+                - "lava-test-case ust_ldconfig --shell ldconfig -v"
+                - "cd .."
+                - "cd lttng-tools_src"
+                - "lava-test-case tools_bootstrap --shell ./bootstrap"
+                - "lava-test-case tools_configure --shell ./configure"
+                - "lava-test-case tools_make --shell make"
+                - "lava-test-case tools_install --shell make install"
+                - "lava-test-case tools_ldconfig --shell ldconfig -v"
+                - "cd .."
+
