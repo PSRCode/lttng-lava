@@ -62,10 +62,6 @@ run:
                 - "lava-test-case install_25 --shell make install"
                 - "lava-test-case install_26 --shell ldconfig -v"
                 - "cd .."
-                - "lava-test-case tar --shell tar -xvf /root/4.4.0-rc4.tar -C /lib/modules/"
-                - "lava-test-case depmod --shell depmod -a -v"
                 - "cd lttng-tools_src/tests"
-                - "ls -la"
-                - "echo 'regression/tools/streaming/test_high_throughput_limits' > `pwd`/root_regression"
                 - "prove --merge -v --exec '' - < `pwd`/root_regression"
 
