@@ -1,0 +1,31 @@
+metadata:
+        format: Lava-Test Test Definition 1.0
+        name: LTTng stack from jenkins bin archive
+        description: "Test"
+
+params:
+        URCU_ARCHIVE: master
+        UST_ARCHIVE: master
+        TOOLS_ARCHIVE: master
+        BABELTRACE_ARCHIVE: master
+
+install:
+        deps:
+                - bsdtar
+        steps:
+                - wget $URCU_ARCHIVE -O urcu.zip
+                - wget $UST_ARCHIVE -O ust.zip
+                - wget $TOOLS_ARCHIVE -O tools.zip
+                - wget $BABELTRACE_ARCHIVE -O babeltrace.zip
+                - for f in *.zip ; do bsdtar --strip-components 2 -xvzf $f -C /usr; done
+                - chmod +x /usr/bin/lttng*
+                - chmod +x /usr/bin/babeltrace
+                - chmod +x /usr/lib/lttng/libexec/lttng-consumerd
+                - export LTTNG_SESSIOND_PATH=/usr/bin
+                - export LTTNG_SESSION_CONFIG_XSD_PATH=/usr/share/xml/lttng/
+                - export LTTNG_CONSUMERD32_BIN=/usr/lib/lttng/libexec/lttng-consumerd
+                - export LTTNG_CONSUMERD64_BIN=/usr/lib/lttng/libexec/lttng-consumerd
+run:
+        steps:
+                - "env"
+
