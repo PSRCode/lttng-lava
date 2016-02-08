@@ -14,10 +14,10 @@ install:
                 - bsdtar
                 - wget
         steps:
-                - wget $URCU_ARCHIVE -O urcu.zip
-                - wget $UST_ARCHIVE -O ust.zip
-                - wget $TOOLS_ARCHIVE -O tools.zip
-                - wget $BABELTRACE_ARCHIVE -O babeltrace.zip
+                - wget --no-check-certificate $URCU_ARCHIVE -O urcu.zip
+                - wget --no-check-certificate $UST_ARCHIVE -O ust.zip
+                - wget --no-check-certificate $TOOLS_ARCHIVE -O tools.zip
+                - wget --no-check-certificate $BABELTRACE_ARCHIVE -O babeltrace.zip
                 - for f in *.zip ; do bsdtar --strip-components 2 -xvzf $f -C /usr; done
                 - chmod +x /usr/bin/lttng*
                 - chmod +x /usr/bin/babeltrace
