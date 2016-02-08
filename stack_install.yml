@@ -31,7 +31,7 @@ run:
                 - export LTTNG_SESSION_CONFIG_XSD_PATH
                 - export LTTNG_CONSUMERD32_BIN
                 - export LTTNG_CONSUMERD64_BIN
-                - lttng-sessiond -b -vvv > lttng-sessiond.log 2>&1"
+                - lttng-sessiond -b -vvv > lttng-sessiond.log 2>&1
                 - lava-test-run-attach lttng-sessiond.log text/plain
                 - lava-test-case fail-test --shell "lttng create -o /tmp/trace"
                 - lava-test-case fail-test --shell "lttng enable-event -u -a"
