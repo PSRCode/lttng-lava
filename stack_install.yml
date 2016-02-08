@@ -4,14 +4,15 @@ metadata:
         description: "Test"
 
 params:
-        URCU_ARCHIVE: master
-        UST_ARCHIVE: master
-        TOOLS_ARCHIVE: master
-        BABELTRACE_ARCHIVE: master
+        URCU_ARCHIVE: "https://ci.lttng.org/view/Liburcu/job/liburcu_master_portbuild/arch=armhf,build=std,conf=std/lastSuccessfulBuild/artifact/*zip*/archive.zip"
+        UST_ARCHIVE: "https://ci.lttng.org/view/LTTng-ust/job/lttng-ust_master_portbuild/arch=armhf,build=std,conf=std,liburcu_version=master/lastSuccessfulBuild/artifact/*zip*/archive.zip"
+        TOOLS_ARCHIVE: "https://ci.lttng.org/view/LTTng-tools/job/lttng-tools_master_portbuild/arch=armhf,babeltrace_version=master,build=std,conf=std,liburcu_version=master/lastSuccessfulBuild/artifact/*zip*/archive.zip"
+        BABELTRACE_ARCHIVE: "https://ci.lttng.org/view/Babeltrace/job/babeltrace_master_portbuild/arch=armhf,build=std,conf=std/26/artifact/*zip*/archive.zip"
 
 install:
         deps:
                 - bsdtar
+                - wget
         steps:
                 - wget $URCU_ARCHIVE -O urcu.zip
                 - wget $UST_ARCHIVE -O ust.zip
