@@ -48,7 +48,7 @@ run:
                 # Sync #1
                 - lava-test-case relayd-ready --shell lava-sync relayd-ready
                 # Prepare the session and start it
-                - lava-test-case create-session --shell "lttng create -U net://{$SOURCE}"
+                - lava-test-case create-session --shell "lttng create -U net://$SOURCE"
                 - lava-test-case enable-event --shell "lttng enable-event -u -a"
                 - lava-test-case start-tracing --shell "lttng start"
                 - cd /usr/share/doc/lttng-ust/examples/easy-ust/
