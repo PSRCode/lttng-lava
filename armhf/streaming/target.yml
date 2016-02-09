@@ -1,0 +1,61 @@
+metadata:
+        format: Lava-Test Test Definition 1.0
+        name: lttng-jenkins-bin-template
+        description: "Basic tracing from archived binaries generated from ci.lttng.org"
+
+params:
+        URCU_ARCHIVE: "https://ci.lttng.org/view/Liburcu/job/liburcu_master_portbuild/arch=armhf,build=std,conf=std/lastSuccessfulBuild/artifact/*zip*/archive.zip"
+        UST_ARCHIVE: "https://ci.lttng.org/view/LTTng-ust/job/lttng-ust_master_portbuild/arch=armhf,build=std,conf=std,liburcu_version=master/lastSuccessfulBuild/artifact/*zip*/archive.zip"
+        TOOLS_ARCHIVE: "https://ci.lttng.org/view/LTTng-tools/job/lttng-tools_master_portbuild/arch=armhf,babeltrace_version=master,build=std,conf=std,liburcu_version=master/lastSuccessfulBuild/artifact/*zip*/archive.zip"
+        BABELTRACE_ARCHIVE: "https://ci.lttng.org/view/Babeltrace/job/babeltrace_master_portbuild/arch=armhf,build=std,conf=std/26/artifact/*zip*/archive.zip"
+        LTTNG_SESSIOND_PATH: /usr/bin
+        LTTNG_SESSION_CONFIG_XSD_PATH: /usr/share/xml/lttng/
+        LTTNG_CONSUMERD32_BIN: /usr/lib/lttng/libexec/lttng-consumerd
+        LTTNG_CONSUMERD64_BIN: /usr/lib/lttng/libexec/lttng-consumerd
+        SESSIOND_VERBOSITY: -vvv
+
+install:
+        deps:
+                - bsdtar
+                - wget
+                - tee
+        steps:
+                - wget --no-check-certificate $URCU_ARCHIVE -O urcu.zip
+                - wget --no-check-certificate $UST_ARCHIVE -O ust.zip
+                - wget --no-check-certificate $TOOLS_ARCHIVE -O tools.zip
+                - wget --no-check-certificate $BABELTRACE_ARCHIVE -O babeltrace.zip
+                # Extract to / . We assume that the archive path have 2
+                # component to strip: archive/build
+                - for f in *.zip ; do bsdtar --strip-components 2 -xvzf $f -C /usr; done
+                # Make sure we can execute the binaries
+                - chmod +x /usr/bin/lttng*
+                - chmod +x /usr/bin/babeltrace
+                - chmod +x /usr/lib/lttng/libexec/lttng-consumerd
+run:
+        steps:
+                # Broadcast and network info
+                - lava-test-case multinode-network --shell lava-network broadcast eth0
+                - lava-test-case multinode-get-network --shell lava-network collect eth0
+                # Fetch the relayd ip
+                - DEVICE=`lava-group | grep -m1 relayd|cut -f2`
+                - SOURCE=`lava-network query $DEVICE ipv4|grep -v LAVA|cut -d: -f2`
+                # Export env variables
+                - export LTTNG_SESSION_CONFIG_XSD_PATH
+                - export LTTNG_CONSUMERD32_BIN
+                - export LTTNG_CONSUMERD64_BIN
+                # Start the sessiond
+                - lttng-sessiond -b $SESSIOND_VERBOSITY 2>&1 | tee lttng-sessiond.log
+                - lava-test-run-attach lttng-sessiond.log text/plain
+                # Sync #1
+                - lava-test-case relayd-ready --shell lava-sync relayd-ready
+                # Prepare the session and start it
+                - lava-test-case create-session --shell "lttng create -U net://{$SOURCE}"
+                - lava-test-case enable-event --shell "lttng enable-event -u -a"
+                - lava-test-case start-tracing --shell "lttng start"
+                - cd /usr/share/doc/lttng-ust/examples/easy-ust/
+                - make
+                - ./sample
+                - cd -
+                - lava-test-case stop-tracing --shell "lttng stop"
+                # Sync #2 for end
+                - lava-test-case target-done --shell lava-sync target-done
