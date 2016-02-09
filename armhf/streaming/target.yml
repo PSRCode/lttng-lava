@@ -18,7 +18,7 @@ install:
         deps:
                 - bsdtar
                 - wget
-                - tee
+                - coreutils
         steps:
                 - wget --no-check-certificate $URCU_ARCHIVE -O urcu.zip
                 - wget --no-check-certificate $UST_ARCHIVE -O ust.zip
