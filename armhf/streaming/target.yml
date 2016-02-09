@@ -37,8 +37,8 @@ run:
                 - lava-test-case multinode-network --shell lava-network broadcast eth0
                 - lava-test-case multinode-get-network --shell lava-network collect eth0
                 # Fetch the relayd ip
-                - DEVICE=`lava-group | grep -m1 relayd|cut -f2`
-                - SOURCE=`lava-network query $DEVICE ipv4|grep -v LAVA|cut -d: -f2`
+                - "DEVICE=`lava-group | grep -m1 relayd|cut -f2`"
+                - "SOURCE=`lava-network query $DEVICE ipv4|grep -v LAVA|cut -d: -f2`"
                 # Export env variables
                 - export LTTNG_SESSION_CONFIG_XSD_PATH
                 - export LTTNG_CONSUMERD32_BIN
