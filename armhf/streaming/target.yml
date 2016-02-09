@@ -44,7 +44,6 @@ run:
                 - export LTTNG_CONSUMERD64_BIN
                 # Start the sessiond
                 - lttng-sessiond -b $SESSIOND_VERBOSITY > lttng-sessiond.log 2>&1
-                - lava-test-run-attach lttng-sessiond.log text/plain
                 # Sync #1
                 - lava-test-case relayd-ready --shell lava-sync relayd-ready
                 # Prepare the session and start it
@@ -58,3 +57,5 @@ run:
                 - lava-test-case stop-tracing --shell "lttng stop"
                 # Sync #2 for end
                 - lava-test-case target-done --shell lava-sync target-done
+                # Attach artifacts
+                - lava-test-run-attach lttng-sessiond.log text/plain

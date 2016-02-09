@@ -37,11 +37,12 @@ run:
                 - export LTTNG_CONSUMERD64_BIN
                 # Start the relayd
                 - lttng-relayd -b $RELAYD_VERBOSITY > lttng-relayd.log 2>&1
-                - lava-test-run-attach lttng-relayd.log text/plain
                 # Sync #1 relayd ready
                 - lava-test-case relayd-ready --shell lava-sync relayd-ready
                 # Sync #2 wait for target done
                 - lava-test-case target-done --shell lava-sync target-done
                 # Prepare the resulting traces
                 - tar -zcvf lttng-traces.tar.gz ~/lttng-traces
+                # Attach artifacts
                 - lava-test-run-attach lttng-traces.tar.gz
+                - lava-test-run-attach lttng-relayd.log text/plain
