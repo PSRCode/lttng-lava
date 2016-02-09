@@ -1,0 +1,9 @@
+metadata:
+        format: Lava-Test Test Definition 1.0
+        name: lttng-jenkins-bin-template
+        description: "Basic tracing from archived binaries generated from ci.lttng.org"
+
+run:
+        steps:
+            - lava-test-case multinode-network --shell lava-network broadcast eth0
+            - lava-test-case multinode-get-network --shell lava-network collect eth0
