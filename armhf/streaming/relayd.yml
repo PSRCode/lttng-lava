@@ -18,7 +18,6 @@ install:
         deps:
                 - bsdtar
                 - wget
-                - coreutils
         steps:
                 - wget --no-check-certificate $URCU_ARCHIVE -O urcu.zip
                 - wget --no-check-certificate $UST_ARCHIVE -O ust.zip
@@ -37,7 +36,7 @@ run:
                 - export LTTNG_CONSUMERD32_BIN
                 - export LTTNG_CONSUMERD64_BIN
                 # Start the relayd
-                - lttng-relayd -b $RELAYD_VERBOSITY 2>&1 | tee lttng-relayd.log
+                - lttng-relayd -b $RELAYD_VERBOSITY > lttng-relayd.log 2>&1
                 - lava-test-run-attach lttng-relayd.log text/plain
                 # Sync #1 relayd ready
                 - lava-test-case relayd-ready --shell lava-sync relayd-ready
