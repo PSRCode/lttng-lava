@@ -10,3 +10,6 @@ run:
             - "DEVICE=`lava-group | grep -m1 relayd|cut -f2`"
             - "SOURCE=`lava-network query $DEVICE ipv4|grep -v LAVA|cut -d: -f2`"
             - "echo $SOURCE"
+            - lava-test-case lavasync1 --shell lava-sync test
+            - lava-test-case lavasync2 --shell lava-sync test2
+            - lava-test-case lavasync3 --shell lava-sync test3
