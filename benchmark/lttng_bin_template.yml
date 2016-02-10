@@ -47,5 +47,5 @@ run:
                 - ./sample
                 - cd -
                 - lava-test-case stop-tracing --shell "lttng stop"
-                - tar -zcvf /sata/tmp/traces.tar.gz ./traces -C /sata/tmp
+                - lava-test-case tar-traces --shell "tar -zcvf /sata/tmp/traces.tar.gz ./traces -C /sata/tmp"
                 - lava-test-run-attach /sata/tmp/traces.tar.gz
