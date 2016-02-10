@@ -33,7 +33,6 @@ run:
                 - export LTTNG_CONSUMERD32_BIN
                 - export LTTNG_CONSUMERD64_BIN
                 - lttng-sessiond -b $SESSIOND_VERBOSITY > lttng-sessiond.log 2>&1
-                - lava-test-run-attach lttng-sessiond.log text/plain
                 - lava-test-case create-session --shell "lttng create -o /tmp/trace"
                 - lava-test-case enable-event --shell "lttng enable-event -u -a"
                 - lava-test-case start-tracing --shell "lttng start"
@@ -44,3 +43,4 @@ run:
                 - lava-test-case stop-tracing --shell "lttng stop"
                 - tar -zcvf traces.tar.gz /tmp/trace
                 - lava-test-run-attach traces.tar.gz
+                - lava-test-run-attach lttng-sessiond.log text/plain
