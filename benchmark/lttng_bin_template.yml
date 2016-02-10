@@ -15,6 +15,7 @@ params:
         LTTNG_CONSUMERD64_BIN: /usr/lib/lttng/libexec/lttng-consumerd
         SESSIOND_VERBOSITY: -vvv
         DISK_PARTITION: /dev/sda1
+        PYTHONPATH: /usr/lib/python3.4/site-packages/
 
 install:
         git-repos:
@@ -43,6 +44,7 @@ run:
                 - export LTTNG_CONSUMERD32_BIN
                 - export LTTNG_CONSUMERD64_BIN
                 - export TMPDIR="/tmp"
+                - export PYTHONPATH="/tmp"
                 - cd benchmarks
                 - lava-test-case build-benchmarks --shell "make"
                 - lava-test-case run-benchmarks --shell "./benchmarks.py"
