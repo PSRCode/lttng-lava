@@ -47,5 +47,5 @@ run:
                 - export TMPDIR="/tmp"
                 - cd benchmarks
                 - lava-test-case build-benchmarks --shell "make"
-                - lava-test-case run-benchmarks --shell "./benchmarks.py"
+                - lava-test-case run-benchmarks --shell "./benchmarks.py --lava-output"
                 - cd -
