@@ -34,7 +34,7 @@ install:
 run:
         steps:
                 - cd lttng-tools-src/tests
-                - lava-test-case unit-test --shell "./run.sh unit_tests"
-                - lava-test-case fast-regression-test --shell "./run.sh fast_regression"
-                - lava-test-case root-regression-test --shell "./run.sh root_regression"
-                - lava-test-case root-regression-test --shell "./run.sh long_regression"
+                - lava-test-case unit-test --shell "prove -v --merge --exec '' - < unit_tests"
+                - lava-test-case fast-regression-test --shell "prove -v --merge --exec '' - < fast_regression"
+                - lava-test-case root-regression-test --shell "prove -v --merge --exec '' - < root_regression"
+                - lava-test-case long-regression-test --shell "prove -v --merge --exec '' - < long_regression"
