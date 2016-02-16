@@ -30,6 +30,9 @@ install:
                 - ./bootstrap
                 - ./configure
                 - make -j `nproc`
+                - cd ..
 run:
         steps:
+                - cd lttng-tools-src
                 - lava-test-case create-session --shell "make check"
+                - cd ..
