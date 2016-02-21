@@ -1,6 +1,6 @@
 metadata:
         format: Lava-Test Test Definition 1.0
-        name: benchmark-ust-sata
+        name: benchmark-ust-common
         description: "Perform lttng ust benchmark"
 
 params:
