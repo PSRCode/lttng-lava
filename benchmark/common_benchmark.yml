@@ -40,6 +40,7 @@ run:
                 - export LTTNG_CONSUMERD64_BIN
                 - export PYTHONPATH
                 - export TMPDIR="/tmp"
+                - ulimit -c unlimited
                 - cd benchmarks
                 - lava-test-case build-benchmarks --shell "make"
                 - lava-test-case run-benchmarks --shell "./benchmarks.py --lava-output"
