@@ -7,7 +7,7 @@ params:
         URCU_ARCHIVE: "https://ci.lttng.org/view/Liburcu/job/liburcu_master_portbuild/arch=armhf,build=std,conf=std/lastSuccessfulBuild/artifact/*zip*/archive.zip"
         UST_ARCHIVE: "https://ci.lttng.org/view/LTTng-ust/job/lttng-ust_master_portbuild/arch=armhf,build=std,conf=std,liburcu_version=master/lastSuccessfulBuild/artifact/*zip*/archive.zip"
         TOOLS_ARCHIVE: "https://ci.lttng.org/view/LTTng-tools/job/lttng-tools_master_portbuild/arch=armhf,babeltrace_version=master,build=std,conf=std,liburcu_version=master/lastSuccessfulBuild/artifact/*zip*/archive.zip"
-        BABELTRACE_ARCHIVE: "https://ci.lttng.org/view/Babeltrace/job/babeltrace_master_portbuild/arch=armhf,build=std,conf=std/26/artifact/*zip*/archive.zip"
+        BABELTRACE_ARCHIVE: "https://ci.lttng.org/view/Babeltrace/job/babeltrace_master_portbuild/arch=armhf,build=std,conf=std/lastSuccessfulBuild/artifact/*zip*/archive.zip"
         LTTNG_SESSIOND_PATH: /usr/bin
         LTTNG_SESSION_CONFIG_XSD_PATH: /usr/share/xml/lttng/
         LTTNG_CONSUMERD32_BIN: /usr/lib/lttng/libexec/lttng-consumerd
