@@ -23,7 +23,6 @@ install:
                 - wget --no-check-certificate $UST_ARCHIVE -O ust.zip
                 - wget --no-check-certificate $BABELTRACE_ARCHIVE -O babeltrace.zip
                 - for f in *.zip ; do bsdtar --strip-components 2 -xvzf $f -C /usr; done
-                - chmod +x /usr/bin/lttng
                 - chmod +x /usr/bin/babeltrace
                 - ldconfig
                 # Build tools
