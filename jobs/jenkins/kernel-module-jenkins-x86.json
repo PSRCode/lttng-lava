@@ -1,18 +1,23 @@
 {
+    "health_check": false,
+    "job_name": "${JOB_NAME}",
+    "device_type": "x86",
+    "timeout": 18000,
     "actions": [
         {
             "command": "deploy_linaro_kernel",
             "parameters": {
-                "customize": {
-                    "|MODULE_ARCHIVE|": [
-                        "rootfs:/",
-                        "archive"
-                    n
-                },
-                "kernel": "|KERNEL_ARCHIVE|",
-                "rootfs": "|ROOT_ARCHIVE|"
+                "overlays": [
+                    "${MODULE_ARCHIVE}"
+		],
+                "kernel": "${KERNEL_ARCHIVE}",
+                "nfsrootfs": "${ROOTFS_ARCHIVE}",
+		"target_type": "ubuntu"
             }
         },
+	{
+		"command": "boot_linaro_image"
+	},
         {
             "command": "lava_command_run",
             "parameters": {
@@ -33,19 +38,15 @@
                         "revision": "WIP",
                         "testdef": "tools/lttng-tools_dep_jenkins_source.yml",
 			"parameters": {
-				"URCU_ARCHIVE": "URCU_ARCHIVE",
-				"UST_ARCHIVE": "UST_ARCHIVE",
-				"BABELTRACE_ARCHIVE": "BABELTRACE_ARCHIVE",
-				"TOOLS_GIT": "|LTTNGTOOLS_VERSION|"
+				"URCU_ARCHIVE": "${URCU_ARCHIVE}",
+				"UST_ARCHIVE": "${UST_ARCHIVE}",
+				"BABELTRACE_ARCHIVE": "${BABELTRACE_ARCHIVE}",
+				"TOOLS_GIT": "${LTTNGTOOLS_VERSION}"
 			}
                     }
                 ],
                 "timeout": 18000
             }
         }
-    ],
-    "health_check": false,
-    "job_name": "|JOB_NAME|",
-    "target": "x86",
-    "timeout": 18000
+    ]
 }
