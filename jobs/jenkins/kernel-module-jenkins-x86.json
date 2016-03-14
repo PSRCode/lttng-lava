@@ -47,6 +47,13 @@
                 ],
                 "timeout": 18000
             }
+        },
+        {
+            "command": "submit_results_on_host",
+            "parameters": {
+                "server": "http://http://lava-master.internal.efficios.com/RPC2/",
+                "stream": "/anonymous/lttng-full-stack/"
+            }
         }
     ]
 }
