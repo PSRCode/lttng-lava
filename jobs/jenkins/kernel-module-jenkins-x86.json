@@ -1,0 +1,51 @@
+{
+    "actions": [
+        {
+            "command": "deploy_linaro_kernel",
+            "parameters": {
+                "customize": {
+                    "|MODULE_ARCHIVE|": [
+                        "rootfs:/",
+                        "archive"
+                    n
+                },
+                "kernel": "|KERNEL_ARCHIVE|",
+                "rootfs": "|ROOT_ARCHIVE|"
+            }
+        },
+        {
+            "command": "lava_command_run",
+            "parameters": {
+                "commands": [
+                    "ifup eth0",
+                    "route -n",
+                    "cat /etc/resolv.conf",
+                    "echo nameserver 8.8.8.8 > /etc/resolv.conf"
+                ]
+            }
+        },
+        {
+            "command": "lava_test_shell",
+            "parameters": {
+                "testdef_repos": [
+                    {
+                        "git-repo": "https://github.com/PSRCode/lttng-lava.git",
+                        "revision": "WIP",
+                        "testdef": "tools/lttng-tools_dep_jenkins_source.yml",
+			"parameters": {
+				"URCU_ARCHIVE": "URCU_ARCHIVE",
+				"UST_ARCHIVE": "UST_ARCHIVE",
+				"BABELTRACE_ARCHIVE": "BABELTRACE_ARCHIVE",
+				"TOOLS_GIT": "|LTTNGTOOLS_VERSION|"
+			}
+                    }
+                ],
+                "timeout": 18000
+            }
+        }
+    ],
+    "health_check": false,
+    "job_name": "|JOB_NAME|",
+    "target": "x86",
+    "timeout": 18000
+}
