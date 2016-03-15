@@ -1,0 +1,36 @@
+metadata:
+        format: Lava-Test Test Definition 1.0
+        name: lttng-tools-full-tests
+        description: "Full LTTng tools test suites including root regression"
+
+params:
+        URCU_ARCHIVE: "https://ci.lttng.org/view/Liburcu/job/liburcu_master_build/arch=x86-64,build=std,conf=std/lastSuccessfulBuild/artifact/*zip*/archive.zip"
+        UST_ARCHIVE: "https://ci.lttng.org/view/LTTng-ust/job/lttng-ust_master_build/arch=x86-64,build=std,conf=std,liburcu_version=master/lastSuccessfulBuild/artifact/*zip*/archive.zip"
+        BABELTRACE_ARCHIVE: "https://ci.lttng.org/view/Babeltrace/job/babeltrace_master_build/arch=x86-64,build=std,conf=std/lastSuccessfulBuild/artifact/*zip*/archive.zip"
+        TOOLS_GIT: "master"
+
+install:
+        git-repos:
+                - url: https://github.com/lttng/lttng-tools.git
+                  destination: lttng-tools-src
+                  branch: TOOLS_GIT
+        deps:
+                - bsdtar
+                - wget
+        steps:
+                # Install dep
+                - wget --no-check-certificate $URCU_ARCHIVE -O urcu.zip
+                - wget --no-check-certificate $UST_ARCHIVE -O ust.zip
+                - wget --no-check-certificate $BABELTRACE_ARCHIVE -O babeltrace.zip
+                - for f in *.zip ; do bsdtar --strip-components 2 -xvzf $f -C /usr; done
+                - chmod +x /usr/bin/babeltrace
+                - ldconfig
+                # Build tools
+                - cd lttng-tools-src
+                - ./bootstrap
+                - ./configure --enable-python-bindings
+                - make -j `nproc`
+                - cd ..
+run:
+        steps:
+                - cd lttng-tools-src/tests
