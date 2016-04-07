@@ -2,6 +2,7 @@
     "health_check": false,
     "job_name": "${JOB_NAME}",
     "device_type": "x86",
+    "tags": [ "dev-sda1" ],
     "timeout": 18000,
     "actions": [
         {
@@ -9,15 +10,24 @@
             "parameters": {
                 "overlays": [
                     "${MODULE_ARCHIVE}"
-		],
+                ],
                 "kernel": "${KERNEL_ARCHIVE}",
                 "nfsrootfs": "${ROOTFS_ARCHIVE}",
-		"target_type": "ubuntu"
+                "target_type": "ubuntu"
+            },
+            "metadata": {
+                "kernel.version" : "${KERNEL_VERSION}",
+                "kernel.type" : "${KERNEL_TYPE}",
+                "jenkins.url" : "${BUILD_URL}",
+                "tools.version": "${LTTNG_TOOLS_VERSION}",
+                "ust.version": "${LTTNG_UST_VERSION}",
+                "babeltrace.version": "${BABELTRACE_VERSION}",
+                "urcu.version": "${URCU_VERSION}"
             }
         },
-	{
-		"command": "boot_linaro_image"
-	},
+        {
+            "command": "boot_linaro_image"
+        },
         {
             "command": "lava_command_run",
             "parameters": {
@@ -25,7 +35,9 @@
                     "ifup eth0",
                     "route -n",
                     "cat /etc/resolv.conf",
-                    "echo nameserver 8.8.8.8 > /etc/resolv.conf"
+                    "echo nameserver 8.8.8.8 > /etc/resolv.conf",
+                    "mount /dev/sda1 /tmp",
+                    "rm -rf /tmp"
                 ]
             }
         },
@@ -37,12 +49,12 @@
                         "git-repo": "https://github.com/PSRCode/lttng-lava.git",
                         "revision": "WIP",
                         "testdef": "tools/lttng-tools_dep_jenkins_source.yml",
-			"parameters": {
-				"URCU_ARCHIVE": "${URCU_ARCHIVE}",
-				"UST_ARCHIVE": "${UST_ARCHIVE}",
-				"BABELTRACE_ARCHIVE": "${BABELTRACE_ARCHIVE}",
-				"TOOLS_GIT": "${LTTNGTOOLS_VERSION}"
-			}
+                        "parameters": {
+                            "URCU_ARCHIVE": "${URCU_ARCHIVE}",
+                            "UST_ARCHIVE": "${UST_ARCHIVE}",
+                            "BABELTRACE_ARCHIVE": "${BABELTRACE_ARCHIVE}",
+                            "TOOLS_GIT": "${LTTNG_TOOLS_VERSION}"
+                        }
                     }
                 ],
                 "timeout": 18000
@@ -51,7 +63,7 @@
         {
             "command": "submit_results_on_host",
             "parameters": {
-                "server": "http://http://lava-master.internal.efficios.com/RPC2/",
+                "server": "http://lava-master.internal.efficios.com/RPC2/",
                 "stream": "/anonymous/lttng-full-stack/"
             }
         }
